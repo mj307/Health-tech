@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import React from "react"
-import logo from './logo.svg';
-=======
 // import React from 'react';
 // import './App.css';
 
@@ -55,10 +51,7 @@ import logo from './logo.svg';
 // export default App;
 
 import React, { useState } from 'react';
->>>>>>> 09d10905087373259fc94b198135ab513c32cb1b
 import './App.css';
-import ChatPage from "./ChatPage"
-
 
 function App() {
 
@@ -130,20 +123,6 @@ function App() {
   };
 
   return (
-<<<<<<< HEAD
-    /*
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-=======
     <div className="app-container">
       <div className="calendar-container">
         {/* Date Range */}
@@ -178,7 +157,6 @@ function App() {
         <button 
           className="request-button"
           onClick={() => setShowForm(true)}
->>>>>>> 09d10905087373259fc94b198135ab513c32cb1b
         >
           REQUEST SHIFT
         </button>
@@ -264,12 +242,7 @@ function App() {
         )}
       </div>
     </div>
-    */
-    <div className="App">
-      <ChatPage />
-    </div>
   );
 }
 
 export default App;
-
