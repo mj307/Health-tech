@@ -1,11 +1,10 @@
-/* Main chat container */
-.chat-container {
+/* .chat-container {
     display: flex;
     height: 100vh;
     background-color: #f0f0f0;
   }
   
-  /* Sidebar */
+
   .chat-sidebar {
     width: 25%;
     background: #ddd;
@@ -50,7 +49,7 @@
     color: gray;
   }
   
-  /* Main chat window */
+
   .chat-main {
     flex-grow: 1;
     display: flex;
@@ -89,7 +88,7 @@
     font-size: 12px;
   }
 
-  /* Input container */
+
 .chat-input-container {
     display: flex;
     padding: 10px;
@@ -119,7 +118,7 @@
     background: #45a049;
   }
   
-  /* Make messages auto-scroll */
+
   .chat-messages {
     flex-grow: 1;
     padding: 16px;
@@ -127,7 +126,7 @@
     max-height: 70vh;
   }
   
-  /* Highlight the active chat */
+
 .chat-contact {
     display: flex;
     align-items: center;
@@ -147,7 +146,7 @@
     background: #c3e6cb !important;
   }
 
-  /* Chat messages */
+
 .chat-message {
     display: flex;
     flex-direction: column;
@@ -168,7 +167,7 @@
     background: #ddd;
   }
   
-  /* Timestamp */
+ 
   .chat-timestamp {
     font-size: 12px;
     color: #666;
@@ -176,11 +175,245 @@
     text-align: right;
   }
   
-  /* Typing Indicator */
+
   .chat-typing {
     font-style: italic;
     color: #777;
     margin-left: 10px;
   }
 
-  
+   */
+
+   /* Main chat container */
+.chat-container {
+  display: flex;
+  height: calc(100vh - 60px); /* Account for navigation height */
+  background-color: #f5f5f5;
+}
+
+/* Sidebar */
+.chat-sidebar {
+  width: 300px;
+  background: #ffffff;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  padding: 20px;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2f6a3a; /* Matching your app's green */
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.chat-contacts-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.chat-contact {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.chat-contact:hover {
+  background-color: #f8f8f8;
+}
+
+.active-chat {
+  background-color: #e8f5e9 !important; /* Light green background for active chat */
+  border-left: 3px solid #5b9b5d;
+}
+
+.chat-avatar {
+  width: 40px;
+  height: 40px;
+  background: #cccccc;
+  border-radius: 50%;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  background-color: #5b9b5d; /* Matching your app's green */
+}
+
+.chat-contact-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-name {
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-recent {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Main chat window */
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fafafa;
+}
+
+.chat-header-bar {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.chat-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0 12px;
+  color: #333;
+}
+
+/* Messages area */
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #f5f5f5;
+  background-image: 
+    linear-gradient(#e5e5e5 1px, transparent 1px),
+    linear-gradient(90deg, #e5e5e5 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.chat-message {
+  display: flex;
+  margin-bottom: 16px;
+  flex-direction: column;
+  max-width: 70%;
+}
+
+.chat-me {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.chat-them {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.chat-bubble {
+  padding: 12px 16px;
+  border-radius: 18px;
+  line-height: 1.4;
+  word-wrap: break-word;
+  position: relative;
+}
+
+.chat-me .chat-bubble {
+  background-color: #5b9b5d; /* Your app's green */
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-them .chat-bubble {
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #e0e0e0;
+  border-bottom-left-radius: 4px;
+}
+
+.chat-timestamp {
+  font-size: 0.7rem;
+  color: #666;
+  margin-top: 4px;
+}
+
+.chat-typing {
+  font-style: italic;
+  color: #666;
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border-radius: 16px;
+  align-self: flex-start;
+  margin: 8px 0;
+}
+
+/* Input container */
+.chat-input-container {
+  display: flex;
+  padding: 15px;
+  background: #ffffff;
+  border-top: 1px solid #e0e0e0;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 24px;
+  outline: none;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+}
+
+.chat-input:focus {
+  border-color: #5b9b5d;
+}
+
+.chat-send-btn {
+  margin-left: 12px;
+  padding: 12px 24px;
+  background-color: #5b9b5d;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.chat-send-btn:hover {
+  background-color: #4a8a4c;
+}
+
+/* Scrollbar styling */
+.chat-messages::-webkit-scrollbar,
+.chat-contacts-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track,
+.chat-contacts-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.chat-messages::-webkit-scrollbar-thumb,
+.chat-contacts-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover,
+.chat-contacts-list::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
