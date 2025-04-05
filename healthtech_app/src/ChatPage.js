@@ -59,7 +59,7 @@ export default function ChatPage() {
 
   // Simulate "Bot" Response
   const receiveBotMessage = (chatId) => {
-    const botResponses = ["That's cool!", "Tell me more!", "Interesting!", "Nice!"];
+    const botResponses = ["Um sure dude sure!", "LOL nice joke!", "Samanyu got a better chance than u bruh!"];
     const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
     
     const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });

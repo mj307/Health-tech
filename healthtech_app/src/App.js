@@ -52,6 +52,7 @@
 
 import React, { useState } from 'react';
 import './App.css';
+import ChatPage from "./ChatPage"; 
 
 function App() {
 
@@ -124,6 +125,9 @@ function App() {
 
   return (
     <div className="app-container">
+      <div className="chat-feature">
+        <ChatPage />
+      </div>
       <div className="calendar-container">
         {/* Date Range */}
         <div className="date-range">
