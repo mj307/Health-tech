@@ -1,6 +1,6 @@
 
 const mongoose = require('mongoose');
-const uri = "mongodb+srv://gauthammohanraj:<Steelroof68%21>@healthtechproj.op9m16o.mongodb.net/?appName=HealthTechProj";
+const uri = "mongodb+srv://gauthammohanraj:Steelroof68%21@healthtechproj.op9m16o.mongodb.net/?appName=HealthTechProj";
 
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 
