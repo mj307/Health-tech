@@ -8,6 +8,9 @@ const calendarRoutes = require('./routes/CalendarRoutes');
 const profileRoutes = require('./routes/ProfileRoutes');
 const billingRoutes = require('./routes/BillingRoutes');
 
+require("dotenv").config();
+const uri = process.env.MONGODB_URI;
+
 const app = express();
 
 // Connect Database
