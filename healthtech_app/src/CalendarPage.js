@@ -1,10 +1,23 @@
-import React, { useState } from 'react';
+// src/CalendarPage.js
+import React, { useState, useEffect } from 'react';
+import api from './apiClient';
+import axios from "axios";
 import './App.css';
+const baseURL = process.env.REACT_APP_API_URL;
 
-function App() {
-  const [showForm, setShowForm] = useState(false);
+function CalendarPage() {
+  const days = ['MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT'];
+  const timeSlots = [
+    '9:00 AM','10:00 AM','11:00 AM','12:00 PM',
+    '1:00 PM','2:00 PM','3:00 PM','4:00 PM',
+    '5:00 PM','6:00 PM','7:00 PM','8:00 PM'
+  ];
+
+  // --- state hooks ---
   const [shifts, setShifts] = useState([]);
+  const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
+    requesterType: 'professional',
     day: 'MON',
     startTime: '9:00 AM',
     endTime: '11:00 AM',
@@ -12,75 +25,84 @@ function App() {
     details: ''
   });
 
-  const days = ['MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT'];
-  const timeSlots = [
-    '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', 
-    '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', 
-    '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'
-  ];
+  // --- load existing shifts from backend ---
+  useEffect(() => {
+    async function fetchShifts() {
+      try {
+        const res = await axios.get('/api/calendar');
+        // assuming your backend returns an array of shifts
+        setShifts(res.data);
+      } catch (err) {
+        console.error('Failed to load shifts', err);
+      }
+    }
+    fetchShifts();
+  }, []);
 
-  const handleInputChange = (e) => {
+  // --- form field handler ---
+  const handleInputChange = e => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  // --- submit new shift ---
+  const handleSubmit = async e => {
     e.preventDefault();
-    const newShift = {
-      ...formData,
-      id: Date.now(),
-      requesterType: 'clinic' // Only clinics can post shifts
-    };
-    setShifts([...shifts, newShift]);
-    setShowForm(false);
-    // Reset form
-    setFormData({
-      day: 'MON',
-      startTime: '9:00 AM',
-      endTime: '11:00 AM',
-      profession: '',
-      details: ''
-    });
+    try {
+      const res = await axios.post(`${baseURL}/api/calendar/createAppointments`, formData);
+      setShifts(prev => [...prev, res.data]);
+      setShowForm(false);
+      setFormData({
+        requesterType: 'professional',
+        day: 'MON',
+        startTime: '9:00 AM',
+        endTime: '11:00 AM',
+        profession: '',
+        details: ''
+      });
+    } catch (err) {
+      console.error('Error creating shift', err.response || err);
+      alert('Error creating shift');
+    }
   };
 
+  // --- helper to check if a shift covers this cell ---
   const isTimeInShift = (day, time, shift) => {
     if (shift.day !== day) return false;
-    
-    const timeIndex = timeSlots.indexOf(time);
-    const startIndex = timeSlots.indexOf(shift.startTime);
-    const endIndex = timeSlots.indexOf(shift.endTime);
-    
-    return timeIndex >= startIndex && timeIndex <= endIndex;
+    const ti = timeSlots.indexOf(time);
+    const si = timeSlots.indexOf(shift.startTime);
+    const ei = timeSlots.indexOf(shift.endTime);
+    return ti >= si && ti <= ei;
   };
 
+  // --- what to render in each cell ---
   const getCellContent = (day, time) => {
     const shift = shifts.find(s => isTimeInShift(day, time, s));
     if (!shift) return null;
-    
-    // Only show text on the first time slot of the shift
+    // only show text on first slot
     if (time === shift.startTime) {
       return (
-        <div className="shift-block clinic">
+        <div className={`shift-block ${shift.requesterType}`}>
           {shift.profession} ({shift.details})
         </div>
       );
     }
-    return <div className="shift-block clinic"></div>;
+    return <div className={`shift-block ${shift.requesterType}`}></div>;
   };
 
   return (
     <div className="app-container">
       <div className="calendar-container">
-        {/* Date Range */}
+        {/* Date Range Header (you can keep your dynamic dates here) */}
         <div className="date-range">
-          {new Date().toLocaleDateString()} - {new Date(Date.now() + 6 * 24 * 60 * 60 * 1000).toLocaleDateString()}
+          {new Date().toLocaleDateString()} - {new Date(Date.now() + 6*24*60*60*1000).toLocaleDateString()}
         </div>
 
         {/* Calendar Header */}
         <div className="calendar-header">
           <div className="time-label">Time</div>
-          {days.map(day => (
-            <div key={day} className="day-header">{day}</div>
+          {days.map(d => (
+            <div key={d} className="day-header">{d}</div>
           ))}
         </div>
 
@@ -89,9 +111,9 @@ function App() {
           {timeSlots.map(time => (
             <div key={time} className="time-row">
               <div className="time-slot">{time}</div>
-              {days.map(day => (
-                <div key={`${day}-${time}`} className="day-cell">
-                  {getCellContent(day, time)}
+              {days.map(d => (
+                <div key={`${d}-${time}`} className="day-cell">
+                  {getCellContent(d, time)}
                 </div>
               ))}
             </div>
@@ -100,7 +122,7 @@ function App() {
       </div>
 
       <div className="action-panel">
-        <button 
+        <button
           className="request-button"
           onClick={() => setShowForm(true)}
         >
@@ -110,40 +132,52 @@ function App() {
         {showForm && (
           <form className="shift-form" onSubmit={handleSubmit}>
             <div className="form-group">
+              <label>Requester Type:</label>
+              <select
+                name="requesterType"
+                value={formData.requesterType}
+                onChange={handleInputChange}
+              >
+                <option value="professional">Professional</option>
+                <option value="clinic">Clinic</option>
+              </select>
+            </div>
+
+            <div className="form-group">
               <label>Day:</label>
-              <select 
-                name="day" 
+              <select
+                name="day"
                 value={formData.day}
                 onChange={handleInputChange}
               >
-                {days.map(day => (
-                  <option key={day} value={day}>{day}</option>
+                {days.map(d => (
+                  <option key={d} value={d}>{d}</option>
                 ))}
               </select>
             </div>
 
             <div className="form-group">
               <label>Start Time:</label>
-              <select 
-                name="startTime" 
+              <select
+                name="startTime"
                 value={formData.startTime}
                 onChange={handleInputChange}
               >
-                {timeSlots.map(time => (
-                  <option key={`start-${time}`} value={time}>{time}</option>
+                {timeSlots.map(t => (
+                  <option key={`s-${t}`} value={t}>{t}</option>
                 ))}
               </select>
             </div>
 
             <div className="form-group">
               <label>End Time:</label>
-              <select 
-                name="endTime" 
+              <select
+                name="endTime"
                 value={formData.endTime}
                 onChange={handleInputChange}
               >
-                {timeSlots.map(time => (
-                  <option key={`end-${time}`} value={time}>{time}</option>
+                {timeSlots.map(t => (
+                  <option key={`e-${t}`} value={t}>{t}</option>
                 ))}
               </select>
             </div>
@@ -172,6 +206,14 @@ function App() {
             <button type="submit" className="submit-button">
               SUBMIT SHIFT
             </button>
+            <button
+              type="button"
+              className="submit-button"
+              style={{ marginLeft: '8px', background: '#888' }}
+              onClick={() => setShowForm(false)}
+            >
+              CANCEL
+            </button>
           </form>
         )}
       </div>
@@ -179,4 +221,4 @@ function App() {
   );
 }
 
-export default App;
+export default CalendarPage;
