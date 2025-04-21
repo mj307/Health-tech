@@ -16,7 +16,7 @@ exports.createAppointment = async (req, res) => {
   try {
     const { title, date, description } = req.body;
     const newAppointment = new Appointment({
-      user: req.user.id,
+      //user: req.user.id,
       title,
       date,
       description,

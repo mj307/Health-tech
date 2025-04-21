@@ -50,16 +50,16 @@ function CalendarPage() {
     e.preventDefault();
     try {
       const res = await axios.post(`${baseURL}/api/calendar/createAppointments`, formData);
-      setShifts(prev => [...prev, res.data]);
-      setShowForm(false);
-      setFormData({
-        requesterType: 'professional',
-        day: 'MON',
-        startTime: '9:00 AM',
-        endTime: '11:00 AM',
-        profession: '',
-        details: ''
-      });
+      //setShifts(prev => [...prev, res.data]);
+      //setShowForm(false);
+      // //setFormData({
+      //   requesterType: 'professional',
+      //   day: 'MON',
+      //   startTime: '9:00 AM',
+      //   endTime: '11:00 AM',
+      //   profession: '',
+      //   details: ''
+      // });
     } catch (err) {
       console.error('Error creating shift', err.response || err);
       alert('Error creating shift');
