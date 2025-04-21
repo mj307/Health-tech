@@ -6,8 +6,8 @@ const ClinicCalendar = () => {
     {
       id: 1,
       day: "MON",
-      startTime: "9:00 AM",
-      endTime: "5:00 PM",
+      startTime: "11:00 AM",
+      endTime: "2:00 PM",
       role: "Registered Nurse",
       accepted: true,
       nurse: {
