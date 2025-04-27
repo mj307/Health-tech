@@ -614,7 +614,7 @@ function CalendarPage({ currentRole }) {
     setShifts([...shifts, {
       ...newShift,
       id: Date.now(),
-      clinic: "Dental Service",
+      clinic: "Sunny Smile",
       accepted: false
     }]);
   };
@@ -668,7 +668,7 @@ function CalendarPage({ currentRole }) {
   return (
     <div className="calendar-page">
       <div className="calendar-container">
-        <h2>{currentRole === 'clinic' ? 'Dental Service' : 'Nurse Maha Siva'}'s Calendar</h2>
+        <h2>{currentRole === 'clinic' ? 'Sunny Smile' : 'Nurse Maha Siva'}'s Calendar</h2>
 
         <div className="calendar-header">
           <div className="time-label">Time</div>
