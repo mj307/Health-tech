@@ -5,13 +5,13 @@ export default function ChatPage() {
   const chatList = [
     { id: 1, name: "Sunny Smiles" },
     { id: 2, name: "Alcan Dental" },
-    { id: 3, name: "Medha Janga Dental Clinic" },
+    { id: 3, name: "Medha Janga Dental Clinic" },,
   ];
 
   const initialMessages = {
-    1: [{ sender: "Sunny Smiles", text: "Hello!", timestamp: "8:30 PM" }],
-    2: [{ sender: "Alcan Dental", text: "Be there soon!", timestamp: "8:30 PM" }],
-    3: [{ sender: "Medha Janga Dental Clinic", text: "Hello! Do you have any questions?", timestamp: "8:30 PM" }],
+    1: [{ sender: "Sunny Smiles", text: "Hello!", timestamp: "10:30 AM" }],
+    2: [{ sender: "Alcan Dental", text: "Be there soon!", timestamp: "12:00 PM" }],
+    3: [{ sender: "Medha Janga Dental Clinic", text: "Okay, sounds good!", timestamp: "2:15 PM" }],
   };
 
   const [messages, setMessages] = useState(initialMessages);
