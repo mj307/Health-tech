@@ -43,7 +43,7 @@ function CalendarPage({ currentRole }) {
 
     let subscription;
     const setup = async () => {
-      await DataStore.start(); // Ensure DataStore is initialized
+      await DataStore.start(); // dataStore is initialized
       await fetchShifts();
       subscription = DataStore.observe(Shift).subscribe(() => {
         console.log('Shift change detected, refreshing...');
@@ -59,7 +59,6 @@ function CalendarPage({ currentRole }) {
   }, []);
 
   const convertToAWSTimeFormat = (timeStr) => {
-    // Example: "9:00 AM" -> "09:00:00"
     const [time, modifier] = timeStr.split(' ');
   
     let [hours, minutes] = time.split(':');
