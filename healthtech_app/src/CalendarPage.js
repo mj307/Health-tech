@@ -8,7 +8,7 @@ function CalendarPage({ currentRole }) {
   const [shifts, setShifts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load shifts and set up real-time updates
+  // shifts
   useEffect(() => {
     const fetchShifts = async () => {
       try {
